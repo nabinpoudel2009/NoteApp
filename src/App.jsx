@@ -3,7 +3,9 @@ import Note from "./Note"
 function App() {
 
     return (
-        <Note />
+        <div className="bg-black text-white">
+            <Note />
+        </div>
     )
 }
 
