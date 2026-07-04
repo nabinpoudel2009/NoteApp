@@ -4,9 +4,15 @@ const Note = () => {
     
     const [title, setTitle] = useState("");
     const [details, setDetails] = useState("");
+    const [task, setTask] = useState([])
 
-    const formHandle = (details) => {
-        details.preventDefault();
+    const formHandle = (e) => {
+        e.preventDefault();
+
+        const copyTask = [...task]
+        copyTask.push({title, details})
+        setTask(copyTask);
+
         setTitle("");
         setDetails("");
     }
@@ -24,7 +30,8 @@ const Note = () => {
                 }}
             >
                 <input 
-                    type="text" 
+                    type="text"
+                    required
                     placeholder='Enter Title'
                     className='ring-1 ring-white/60 font-medium outline-none rounded-md p-2 w-1/2'
                     value={title}
@@ -34,6 +41,7 @@ const Note = () => {
                 />
                 <textarea
                     placeholder='Enter Details.'
+                    required
                     className='ring-1 ring-white/60 h-32 font-medium rounded-md outline-none p-2 w-1/2'
                     value={details}
                     onChange={(e) => {
@@ -43,7 +51,7 @@ const Note = () => {
                 </textarea>
 
                 <button 
-                    className='bg-gray-600 text-white p-2 font-medium rounded-lg outline-none w-1/2'
+                    className='bg-gray-600 hover:bg-slate-500 text-white p-2 font-medium rounded-lg outline-none w-1/2'
                 >
                     Add Note
                 </button>
@@ -53,11 +61,18 @@ const Note = () => {
             <h3 className='text-center font-bold text-3xl mt-1 font-mono'>Your Notes</h3>
 
             <section className='mt-5 flex items-center gap-5 flex-wrap'>
-                <div className='bg-white text-black p-2 rounded-xl min-h-50 h-auto w-50'>
-                    <h3 className='text-xl text-center font-bold'>hello</h3>
-                    <hr />
-                    <p className='text-sm overflow-y-scroll'>Lorem ipsum dolor sit amet consectetur ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit, officiis deleniti</p>
-                </div>
+                {task.map(function (elem, key) {
+                    return (
+                        <div
+                            className='bg-gray-100 text-black min-h-60 h-auto w-50 break-all overflow-hidden p-2 rounded-xl'
+                            key={key}
+                        >
+                                <h3 className='text-center font-bold text-2xl'>{elem.title}</h3>
+                                <hr />
+                                <p className='text-sm'>{elem.details}</p>
+                        </div>
+                    )
+                })}
             </section>
 
         </main>
