@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 const Note = () => {
     
@@ -17,6 +18,12 @@ const Note = () => {
         setDetails("");
     }
 
+    const deleteNote = (key) => {
+        const copyTask = [...task]
+        copyTask.splice(key, 1);
+        
+        setTask(copyTask);
+    }
 
     return (
         <main className='h-screen max-w-7xl mx-auto bg-black p-5 text-white'>
@@ -64,12 +71,24 @@ const Note = () => {
                 {task.map(function (elem, key) {
                     return (
                         <div
-                            className='bg-gray-100 text-black min-h-60 h-auto w-50 break-all overflow-hidden p-2 rounded-xl'
+                            className='bg-gray-100 text-black h-60 w-50 flex flex-col p-2 rounded-xl'
                             key={key}
                         >
+                            <div className='break-all h-[90%]'>
                                 <h3 className='text-center font-bold text-2xl'>{elem.title}</h3>
                                 <hr />
                                 <p className='text-sm'>{elem.details}</p>
+                            </div>
+                            <div className='flex flex-row-reverse'>
+                                <button 
+                                    className='p-2 text-2xl bg-red-500 text-white rounded-lg flex flex-row-reverse'
+                                    onClick={() => {
+                                        deleteNote(key);
+                                    }}
+                                >
+                                    <MdOutlineDeleteOutline />
+                                </button>
+                            </div>
                         </div>
                     )
                 })}
